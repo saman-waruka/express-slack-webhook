@@ -39,7 +39,7 @@ app.post("/start", (req, res) => {
   ec2.startInstances(params, function (err, data) {
     if (err) {
       console.log(err, err.stack); // an error occurred
-      res.send({ message: "start unsuccess!", data }, 400);
+      res.send({ message: "start unsuccess!", data }, 200);
     } else {
       console.log(" start "); // successful response
       console.log(data); // successful response
@@ -57,7 +57,7 @@ app.post("/stop", (req, res) => {
   ec2.stopInstances(params, function (err, data) {
     if (err) {
       console.log(err, err.stack); // an error occurred
-      res.send({ message: "stop unsuccess!", data }, 400);
+      res.send({ message: "stop unsuccess!", data }, 200);
     } else {
       console.log(" stop "); // successful response
       console.log(data); // successful response
@@ -75,7 +75,7 @@ app.post("/reboot", (req, res) => {
   ec2.rebootInstances(params, function (err, data) {
     if (err) {
       console.log(err, err.stack); // an error occurred
-      res.send({ message: "reboot unsuccess!", err }, 400);
+      res.send({ message: "reboot unsuccess!", err }, 200);
     } else {
       console.log(" reboot "); // successful response
       console.log(data); // successful response
@@ -92,7 +92,7 @@ app.post("/status", (req, res) => {
   ec2.describeInstanceStatus(params, function (err, data) {
     if (err) {
       console.log(err, err.stack); // an error occurred
-      res.send({ message: "get status unsuccess!", err }, 400);
+      res.send({ message: "get status unsuccess!", err }, 200);
     } else {
       console.log(" status "); // successful response
       console.log(data); // successful response
@@ -104,7 +104,7 @@ app.post("/des-instance", (req, res) => {
   ec2.describeInstances({}, function (err, data) {
     if (err) {
       console.log(err, err.stack); // an error occurred
-      res.send({ message: "get reportInstanceStatus unsuccess!", err }, 400);
+      res.send({ message: "get reportInstanceStatus unsuccess!", err }, 200);
     } else {
       console.log(" status "); // successful response
       console.log(data); // successful response
@@ -121,7 +121,7 @@ app.post("/sum", (req, res) => {
   ec2.getConsoleOutput(params, function (err, data) {
     if (err) {
       console.log(err, err.stack); // an error occurred
-      res.send({ message: "get reportInstanceStatus unsuccess!", err }, 400);
+      res.send({ message: "get reportInstanceStatus unsuccess!", err }, 200);
     } else {
       console.log(" status "); // successful response
       console.log(data); // successful response
