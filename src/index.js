@@ -39,11 +39,15 @@ app.post("/start", (req, res) => {
   ec2.startInstances(params, function (err, data) {
     if (err) {
       console.log(err, err.stack); // an error occurred
-      res.send({ message: "start unsuccess!\n\n", data }, 200);
+      res.send("start unsuccess!\n\n" + err.message, 200);
     } else {
       console.log(" start "); // successful response
       console.log(data); // successful response
-      res.send({ message: "start success!\n\n", data }, 200);
+      const str = data.StartingInstances.map(
+        (instance) =>
+          `instanceId: ${instance.InstanceId}   state: ${instance.CurrentState.Name}`
+      ).join("\n");
+      res.send("start success!\n\n" + str, 200);
     }
   });
 });
@@ -57,11 +61,15 @@ app.post("/stop", (req, res) => {
   ec2.stopInstances(params, function (err, data) {
     if (err) {
       console.log(err, err.stack); // an error occurred
-      res.send({ message: "stop unsuccess!\n\n", data }, 200);
+      res.send("stop unsuccess!\n\n" + err.message, 200);
     } else {
       console.log(" stop "); // successful response
       console.log(data); // successful response
-      res.send({ message: "stop success!\n\n", data }, 200);
+      const str = data.StoppingInstances.map(
+        (instance) =>
+          `instanceId: ${instance.InstanceId}   state: ${instance.CurrentState.Name}`
+      ).join("\n");
+      res.send("stop success!\n" + str, 200);
     }
   });
 });
@@ -75,11 +83,11 @@ app.post("/reboot", (req, res) => {
   ec2.rebootInstances(params, function (err, data) {
     if (err) {
       console.log(err, err.stack); // an error occurred
-      res.send({ message: "reboot unsuccess!\n\n", err }, 200);
+      res.send("reboot unsuccess!\n\n" + err.message, 200);
     } else {
       console.log(" reboot "); // successful response
       console.log(data); // successful response
-      res.send({ message: "reboot success!\n\n", data }, 200);
+      res.send("reboot success!\n\n", 200);
     }
   });
 });
@@ -92,11 +100,17 @@ app.post("/status", (req, res) => {
   ec2.describeInstanceStatus(params, function (err, data) {
     if (err) {
       console.log(err, err.stack); // an error occurred
-      res.send({ message: "get status unsuccess!\n\n", err }, 200);
+      res.send("get status unsuccess!\n\n" + err.message, 200);
     } else {
       console.log(" status "); // successful response
       console.log(data); // successful response
-      res.send({ message: "get status success!\n\n", data }, 200);
+      let str = "";
+      for (const instance of data.InstanceStatuses) {
+        str =
+          str +
+          `instanceId: ${instance.InstanceId}   status: ${instance.InstanceStatus.Status}   state: ${instance.InstanceState.Name}\n`;
+      }
+      res.send("get status success!\n" + str, 200);
     }
   });
 });
@@ -104,14 +118,14 @@ app.post("/des-instance", (req, res) => {
   ec2.describeInstances({}, function (err, data) {
     if (err) {
       console.log(err, err.stack); // an error occurred
-      res.send(
-        { message: "get reportInstanceStatus unsuccess!\n\n", err },
-        200
-      );
+      res.send("get reportInstanceStatus unsuccess!\n\n" + err.message, 200);
     } else {
       console.log(" status "); // successful response
       console.log(data); // successful response
-      res.send({ message: "get reportInstanceStatus success!\n\n", data }, 200);
+      res.send(
+        "get reportInstanceStatus success!\n\n" + JSON.stringify(data),
+        200
+      );
     }
   });
 });
@@ -124,14 +138,14 @@ app.post("/sum", (req, res) => {
   ec2.getConsoleOutput(params, function (err, data) {
     if (err) {
       console.log(err, err.stack); // an error occurred
-      res.send(
-        { message: "get reportInstanceStatus unsuccess!\n\n", err },
-        200
-      );
+      res.send("get reportInstanceStatus unsuccess!\n\n" + err.message, 200);
     } else {
       console.log(" status "); // successful response
       console.log(data); // successful response
-      res.send({ message: "get reportInstanceStatus success!\n\n", data }, 200);
+      res.send(
+        "get reportInstanceStatus success!\n\n" + JSON.stringify(data),
+        200
+      );
     }
   });
 });
