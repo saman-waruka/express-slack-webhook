@@ -122,10 +122,11 @@ app.post("/des-instance", (req, res) => {
     } else {
       console.log(" status "); // successful response
       console.log(data); // successful response
-      res.send(
-        "get reportInstanceStatus success!\n\n" + JSON.stringify(data),
-        200
-      );
+      // res.send(
+      //   "get reportInstanceStatus success!\n\n" + JSON.stringify(data),
+      //   200
+      // );
+      res.send(JSON.stringify(data, null, 2), 200);
     }
   });
 });
@@ -143,7 +144,7 @@ app.post("/sum", (req, res) => {
       console.log(" status "); // successful response
       console.log(data); // successful response
       res.send(
-        "get reportInstanceStatus success!\n\n" + JSON.stringify(data),
+        "get reportInstanceStatus success!\n\n" + JSON.stringify(data, null, 2),
         200
       );
     }
